@@ -543,9 +543,9 @@ case "$COMMAND" in
         # both sets of headers into a single directory
         rm -rf include
         mv core/include include
-        mkdir -p include/Realm
-        cp Realm/*.h include/Realm
-        touch include/Realm/RLMPlatform.h
+        mkdir -p include/realm
+        cp Realm/*.h include/realm
+        touch include/realm/RLMPlatform.h
         ;;
 
     ######################################
