@@ -68,7 +68,8 @@ public class Object: RLMObjectBase {
     }
 
     /**
-    Initialize a standalone (unpersisted) `Object` with values from an `Array<AnyObject>` or `Dictionary<String, AnyObject>`.
+    Initialize a standalone (unpersisted) `Object` with values from an `Array<AnyObject>` or
+    `Dictionary<String, AnyObject>`.
     Call `add(_:)` on a `Realm` to add standalone objects to a realm.
 
     - parameter value: The value used to populate the object. This can be any key/value coding compliant
@@ -150,10 +151,10 @@ public class Object: RLMObjectBase {
     - parameter className: The type of object on which the relationship to query is defined.
     - parameter property:  The name of the property which defines the relationship.
 
-    - returns: An `Array` of objects of type `className` which have this object as their value for the `propertyName` property.
+    - returns: An `Array` of objects of type `className` which have this object as their value for
+               the `propertyName` property.
     */
     public func linkingObjects<T: Object>(type: T.Type, forProperty propertyName: String) -> [T] {
-        // FIXME: use T.className()
         return RLMObjectBaseLinkingObjectsOfClass(self, (T.self as Object.Type).className(), propertyName) as! [T]
     }
 
