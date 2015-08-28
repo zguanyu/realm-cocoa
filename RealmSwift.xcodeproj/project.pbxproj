@@ -19,6 +19,17 @@
 			name = Realm;
 			productName = Realm;
 		};
+		E8703E0E1B90FC7E00E4B46C /* SwiftLint */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E8703E0F1B90FC7E00E4B46C /* Build configuration list for PBXAggregateTarget "SwiftLint" */;
+			buildPhases = (
+				E8703E121B90FC8300E4B46C /* Run SwiftLint */,
+			);
+			dependencies = (
+			);
+			name = SwiftLint;
+			productName = SwiftLint;
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -389,6 +400,9 @@
 					C0E04FAA1AB2366200DCC8C0 = {
 						CreatedOnToolsVersion = 6.2;
 					};
+					E8703E0E1B90FC7E00E4B46C = {
+						CreatedOnToolsVersion = 7.0;
+					};
 				};
 			};
 			buildConfigurationList = 554A51D13FAED0A637EBFEBF /* Build configuration list for PBXProject "RealmSwift" */;
@@ -408,6 +422,7 @@
 				02B822551A532100007F28A5 /* RealmSwift Tests */,
 				026B0EFB1A780414005E26C8 /* Realm */,
 				C0E04FAA1AB2366200DCC8C0 /* TestHost */,
+				E8703E0E1B90FC7E00E4B46C /* SwiftLint */,
 			);
 		};
 /* End PBXProject section */
@@ -462,6 +477,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "sh build.sh set-swift-version";
+		};
+		E8703E121B90FC8300E4B46C /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "swiftlint lint --path RealmSwift";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -622,6 +651,20 @@
 			};
 			name = Release;
 		};
+		E8703E101B90FC7E00E4B46C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E8703E111B90FC7E00E4B46C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -669,6 +712,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		E8703E0F1B90FC7E00E4B46C /* Build configuration list for PBXAggregateTarget "SwiftLint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E8703E101B90FC7E00E4B46C /* Debug */,
+				E8703E111B90FC7E00E4B46C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
