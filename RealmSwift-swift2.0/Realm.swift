@@ -121,11 +121,7 @@ public final class Realm {
     */
     @available(*, deprecated=1, message="Use Realm(configuration:)")
     public convenience init(path: String, readOnly: Bool, encryptionKey: NSData? = nil) throws {
-        let rlmRealm = try RLMRealm(path: path,
-            key: encryptionKey,
-            readOnly: readOnly,
-            inMemory: false,
-            dynamic: false,
+        let rlmRealm = try RLMRealm(path: path, key: encryptionKey, readOnly: readOnly, inMemory: false, dynamic: false,
             schema: nil)
         self.init(rlmRealm)
     }

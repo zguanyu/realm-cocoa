@@ -70,8 +70,7 @@ block automatically as needed.
 */
 @available(*, deprecated=1, message="Use Realm(configuration:error:)")
 public func setDefaultRealmSchemaVersion(schemaVersion: UInt64, migrationBlock: MigrationBlock) {
-    RLMRealmSetSchemaVersionForPath(schemaVersion,
-        Realm.Configuration.defaultConfiguration.path,
+    RLMRealmSetSchemaVersionForPath(schemaVersion, Realm.Configuration.defaultConfiguration.path,
         accessorMigrationBlock(migrationBlock))
 }
 
@@ -109,8 +108,7 @@ Get the schema version for a Realm at a given path.
 
 - returns: The version of the Realm at `realmPath` or `nil` if the version cannot be read.
 */
-public func schemaVersionAtPath(realmPath: String,
-    encryptionKey: NSData? = nil,
+public func schemaVersionAtPath(realmPath: String, encryptionKey: NSData? = nil,
     error: NSErrorPointer = nil) -> UInt64? {
     let version = RLMRealm.schemaVersionAtPath(realmPath, encryptionKey: encryptionKey, error: error)
     if version == RLMNotVersioned {
