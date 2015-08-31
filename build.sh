@@ -53,6 +53,7 @@ command:
   test-osx-swift:       tests RealmSwift OS X framework
   verify:               verifies docs, osx, osx-swift, ios-static, ios-dynamic, ios-swift, ios-device in both Debug and Release configurations
   docs:                 builds docs in docs/output
+  swiftlint:            runs SwiftLint on Realm Swift
   examples:             builds all examples
   examples-ios:         builds all static iOS examples
   examples-ios-swift:   builds all Swift iOS examples
@@ -571,6 +572,15 @@ case "$COMMAND" in
     ######################################
     "docs")
         sh scripts/build-docs.sh
+        exit 0
+        ;;
+
+    ######################################
+    # SwiftLint
+    ######################################
+    "swiftlint")
+        sh build.sh set-swift-version 2.0
+        xcrealmswift "-scheme SwiftLint"
         exit 0
         ;;
 
