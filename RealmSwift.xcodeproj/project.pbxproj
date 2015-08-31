@@ -490,7 +490,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "swiftlint lint --path RealmSwift";
+			shellScript = "swiftlint";
 		};
 /* End PBXShellScriptBuildPhase section */
 
