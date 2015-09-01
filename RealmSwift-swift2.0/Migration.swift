@@ -71,7 +71,7 @@ block automatically as needed.
 @available(*, deprecated=1, message="Use Realm(configuration:error:)")
 public func setDefaultRealmSchemaVersion(schemaVersion: UInt64, migrationBlock: MigrationBlock) {
     RLMRealmSetSchemaVersionForPath(schemaVersion, Realm.Configuration.defaultConfiguration.path,
-        accessorMigrationBlock(migrationBlock))
+                                    accessorMigrationBlock(migrationBlock))
 }
 
 /**
@@ -190,7 +190,7 @@ public final class Migration {
     public func enumerate(objectClassName: String, _ block: MigrationObjectEnumerateBlock) {
         rlmMigration.enumerateObjects(objectClassName) {
             block(oldObject: unsafeBitCast($0, MigrationObject.self),
-                newObject: unsafeBitCast($1, MigrationObject.self))
+                  newObject: unsafeBitCast($1, MigrationObject.self))
         }
     }
 
