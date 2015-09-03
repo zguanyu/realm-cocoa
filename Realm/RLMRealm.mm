@@ -31,7 +31,7 @@
 #import "RLMProperty.h"
 #import "RLMQueryUtil.hpp"
 #import "RLMRealmUtil.hpp"
-#import "RLMSchema_Private.h"
+#import "RLMSchema_Private.hpp"
 #import "RLMUpdateChecker.hpp"
 #import "RLMUtil.hpp"
 
@@ -48,10 +48,6 @@ using namespace realm::util;
 
 @interface RLMRealmConfiguration ()
 - (realm::Realm::Config&)config;
-@end
-
-@interface RLMSchema ()
-+ (instancetype)dynamicSchemaFromObjectStoreSchema:(realm::Schema &)objectStoreSchema;
 @end
 
 @interface RLMRealm ()
@@ -455,14 +451,20 @@ static void RLMRealmSetSchemaAndAlign(RLMRealm *realm, RLMSchema *targetSchema) 
             }
         }
         else {
-            // set/align schema or perform migration if needed
-            if (!configuration.customSchema) {
-                configuration.customSchema = [RLMSchema.sharedSchema copy];
-            }
-
             try {
-                realm->_realm->update_schema(*config.schema, config.schema_version);
-                RLMRealmSetSchemaAndAlign(realm, configuration.customSchema);
+                // set/align schema or perform migration if needed
+                RLMSchema *schema = configuration.customSchema;
+                if (!schema) {
+                    if (dynamic) {
+                        schema = [RLMSchema dynamicSchemaFromObjectStoreSchema:*realm->_realm->config().schema];
+                    }
+                    else {
+                        schema = [RLMSchema.sharedSchema copy];
+                        realm->_realm->update_schema(schema.objectStoreCopy, config.schema_version);
+                    }
+                }
+
+                RLMRealmSetSchemaAndAlign(realm, schema);
             } catch (std::exception const& exception) {
                 RLMSetErrorOrThrow(RLMMakeError(RLMException(exception)), error);
                 return nil;
