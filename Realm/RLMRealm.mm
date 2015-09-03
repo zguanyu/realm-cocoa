@@ -363,11 +363,11 @@ static void RLMRealmSetSchemaAndAlign(RLMRealm *realm, RLMSchema *targetSchema) 
             }
             case RealmFileException::Kind::IncompatibleLockFile: {
                 NSString *err = @"Realm file is currently open in another process "
-                "which cannot share access with this process. All "
-                "processes sharing a single file must be the same "
-                "architecture. For sharing files between the Realm "
-                "Browser and an iOS simulator, this means that you "
-                "must use a 64-bit simulator.";
+                                 "which cannot share access with this process. All "
+                                 "processes sharing a single file must be the same "
+                                 "architecture. For sharing files between the Realm "
+                                 "Browser and an iOS simulator, this means that you "
+                                 "must use a 64-bit simulator.";
                 RLMSetErrorOrThrow(RLMMakeError(RLMErrorIncompatibleLockFile, File::PermissionDenied(err.UTF8String)), outError);
                 break;
             }
@@ -381,12 +381,14 @@ static void RLMRealmSetSchemaAndAlign(RLMRealm *realm, RLMSchema *targetSchema) 
                 RLMSetErrorOrThrow(RLMMakeError(RLMErrorFail, ex), outError);
                 break;
         }
-        return nullptr;
     }
-    catch(const std::exception &exp) {
+    catch (std::system_error const& ex) {
+        RLMSetErrorOrThrow([NSError errorWithDomain:NSPOSIXErrorDomain code:ex.code().value() userInfo:nil], outError);
+    }
+    catch (const std::exception &exp) {
         RLMSetErrorOrThrow(RLMMakeError(RLMErrorFail, exp), outError);
-        return nullptr;
     }
+    return nullptr;
 }
 
 + (instancetype)realmWithConfiguration:(RLMRealmConfiguration *)configuration error:(NSError **)error {
@@ -479,7 +481,7 @@ static void RLMRealmSetSchemaAndAlign(RLMRealm *realm, RLMSchema *targetSchema) 
     if (!readOnly) {
         // initializing the schema started a read transaction, so end it
         [realm invalidate];
-        realm->_realm->m_delegate = RLMCreateRealmDelegate(realm, error);
+        realm->_realm->m_delegate = RLMCreateRealmDelegate(realm);
     }
 
     return RLMAutorelease(realm);
