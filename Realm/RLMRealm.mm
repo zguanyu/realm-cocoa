@@ -348,7 +348,7 @@ static void RLMRealmSetSchemaAndAlign(RLMRealm *realm, RLMSchema *targetSchema) 
     try {
         return Realm::get_shared_realm(config);
     }
-    catch (RealmFileException &ex) {
+    catch (RealmFileException const& ex) {
         switch (ex.kind()) {
             case RealmFileException::Kind::PermissionDenied: {
                 RLMSetErrorOrThrow(RLMMakeError(RLMErrorFilePermissionDenied, ex), outError);
@@ -376,7 +376,7 @@ static void RLMRealmSetSchemaAndAlign(RLMRealm *realm, RLMSchema *targetSchema) 
         }
     }
     catch (std::system_error const& ex) {
-        RLMSetErrorOrThrow([NSError errorWithDomain:NSPOSIXErrorDomain code:ex.code().value() userInfo:nil], outError);
+        RLMSetErrorOrThrow(RLMMakeError(ex), outError);
     }
     catch (const std::exception &exp) {
         RLMSetErrorOrThrow(RLMMakeError(RLMErrorFail, exp), outError);

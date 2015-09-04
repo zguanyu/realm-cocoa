@@ -262,6 +262,13 @@ NSError *RLMMakeError(RLMError code, std::exception const& exception) {
                                       @"Error Code": @(code)}];
 }
 
+NSError *RLMMakeError(std::system_error const& exception) {
+    return [NSError errorWithDomain:RLMErrorDomain
+                               code:exception.code().value()
+                           userInfo:@{NSLocalizedDescriptionKey: @(exception.what()),
+                                      @"Error Code": @(exception.code().value())}];
+}
+
 NSError *RLMMakeError(NSException *exception) {
     return [NSError errorWithDomain:RLMErrorDomain
                                code:0
