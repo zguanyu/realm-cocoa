@@ -415,8 +415,13 @@ static void RLMRealmSetSchemaAndAlign(RLMRealm *realm, RLMSchema *targetSchema) 
         RLMMigrationBlock userBlock = configuration.migrationBlock ?: migrationBlockForPath(path);
         if (userBlock) {
             RLMSchema *oldSchema = [RLMSchema dynamicSchemaFromObjectStoreSchema:*old_realm->config().schema];
-            RLMSchema *newSchema = configuration.customSchema ?: [RLMSchema.sharedSchema copy];
             RLMRealm *oldRealm = [RLMRealm realmWithSharedRealm:old_realm schema:oldSchema];
+
+            // The destination RLMRealm can't just use the schema from the
+            // SharedRealm because it doesn't have information about whether or
+            // not a calss was defined in Swift, which effects how new objects
+            // are created
+            RLMSchema *newSchema = configuration.customSchema ?: [RLMSchema.sharedSchema copy];
             RLMRealm *newRealm = [RLMRealm realmWithSharedRealm:realm schema:newSchema];
 
             [[[RLMMigration alloc] initWithRealm:newRealm oldRealm:oldRealm] execute:userBlock];
