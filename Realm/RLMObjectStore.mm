@@ -403,7 +403,7 @@ RLMObjectBase *RLMCreateObjectInRealmWithValue(RLMRealm *realm, NSString *classN
                 }
             }
             else if (created && !prop.optional) {
-                @throw RLMException([NSString stringWithFormat:@"Missing value for property '%@'", prop.name ?: @"nil"]);
+                @throw RLMException([NSString stringWithFormat:@"Missing value for property '%@'", prop.name]);
             }
         }
     }
