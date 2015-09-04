@@ -20,34 +20,76 @@
 #define REALM_RESULTS_HPP
 
 #import "shared_realm.hpp"
+
 #import <realm/table_view.hpp>
+#import <realm/table.hpp>
+#import <realm/util/optional.hpp>
 
 namespace realm {
-    struct SortOrder {
-        std::vector<size_t> columnIndices;
-        std::vector<bool> ascending;
+template<typename T> class BasicRowExpr;
+using RowExpr = BasicRowExpr<Table>;
+class Mixed;
 
-        explicit operator bool() const {
-            return !columnIndices.empty();
-        }
-    };
+struct SortOrder {
+    std::vector<size_t> columnIndices;
+    std::vector<bool> ascending;
 
-    static SortOrder s_defaultSort = {{}, {}};
+    explicit operator bool() const {
+        return !columnIndices.empty();
+    }
+};
 
-    struct Results {
-        Results(SharedRealm &r, ObjectSchema &o, Query q, SortOrder s = s_defaultSort);
-        size_t size();
-        Row get(std::size_t row_ndx);
-        void verify_attached();
+class Results {
+public:
+    Results() = default;
+    Results(SharedRealm r, Table& table);
+    Results(SharedRealm r, Query q, SortOrder s = {});
 
-        SharedRealm realm;
-        ObjectSchema &object_schema;
-        Query backing_query;
-        TableView table_view;
-        std::unique_ptr<SortOrder> sort_order;
+    Query get_query() const;
+    SortOrder const& get_sort() const { return m_sort; }
 
-        void setSort(SortOrder s);
-    };
+    size_t size() const;
+    RowExpr get(size_t index);
+
+    util::Optional<RowExpr> first();
+    util::Optional<RowExpr> last();
+
+    size_t index_of(Row const& row);
+    size_t index_of(size_t row_ndx);
+
+    void clear();
+
+    Results filter(Query&& q) const;
+    Results sort(SortOrder&& sort) const;
+
+    util::Optional<Mixed> max(size_t column);
+    util::Optional<Mixed> min(size_t column);
+    util::Optional<Mixed> average(size_t column);
+    util::Optional<Mixed> sum(size_t column);
+
+private:
+    SharedRealm m_realm;
+    Query m_query;
+    TableView m_table_view;
+    Table* m_table = nullptr;
+    SortOrder m_sort;
+
+    enum class Mode {
+        Empty,
+        Table,
+        Query,
+        TableView
+    } m_mode = Mode::Empty;
+
+    void validate_read() const;
+    void validate_write() const;
+
+    void materialize_tableview();
+
+    template<typename Int, typename Float, typename Double, typename DateTime>
+    util::Optional<Mixed> aggregate(size_t column, Int agg_int, Float agg_float,
+                                    Double agg_double, DateTime agg_datetime);
+};
 }
 
 #endif /* REALM_RESULTS_HPP */

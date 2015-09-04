@@ -23,6 +23,10 @@
 #import <realm/binary_data.hpp>
 #import <realm/string_data.hpp>
 
+namespace realm {
+    class Mixed;
+}
+
 @class RLMObjectSchema;
 @class RLMProperty;
 @class RLMRealm;
@@ -139,6 +143,8 @@ static inline realm::BinaryData RLMBinaryDataForNSData(__unsafe_unretained NSDat
     auto bytes = static_cast<const char *>(data.bytes) ?: static_cast<char *>((__bridge void *)data);
     return realm::BinaryData(bytes, data.length);
 }
+
+id RLMMixedToObjc(realm::Mixed const& value);
 
 static inline NSUInteger RLMConvertNotFound(size_t index) {
     return index == realm::not_found ? NSNotFound : index;
