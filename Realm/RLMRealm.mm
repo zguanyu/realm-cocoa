@@ -180,12 +180,6 @@ void RLMRealmAddPathSettingsToConfiguration(RLMRealmConfiguration *configuration
     NSHashTable *_notificationHandlers;
 }
 
-@dynamic path;
-@dynamic readOnly;
-@dynamic inWriteTransaction;
-@dynamic group;
-@dynamic autorefresh;
-
 + (BOOL)isCoreDebug {
     return realm::Version::has_feature(realm::feature_Debug);
 }
