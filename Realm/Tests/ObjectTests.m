@@ -723,6 +723,15 @@ RLM_ARRAY_TYPE(PrimaryEmployeeObject);
     [realm cancelWriteTransaction];
 }
 
+- (void)testLinkingToObjectNotInSchemaThrows {
+    RLMRealmConfiguration *configuration = [RLMRealmConfiguration defaultConfiguration];
+    configuration.objectClasses = @[LinkStringObject.class];
+    XCTAssertThrows([RLMRealm realmWithConfiguration:configuration error:nil]);
+
+    configuration.objectClasses = @[LinkStringObject.class, StringObject.class];
+    XCTAssertNoThrow([RLMRealm realmWithConfiguration:configuration error:nil]);
+}
+
 #ifdef REALM_ENABLE_NULL
 - (void)testOptionalStringProperties {
     RLMRealm *realm = [RLMRealm defaultRealm];
