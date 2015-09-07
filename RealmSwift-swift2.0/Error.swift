@@ -32,13 +32,35 @@ happening when initializing a Realm instance.
     }
 
 */
-public struct Error : ErrorType {
+public enum Error: ErrorType {
     /**
     Implementation of hidden requirement by `ErrorType`.
 
     - returns: the rawValue of the underlying `rlmError`.
     */
-    public let _code: Int
+    public var _code: Int {
+        return rlmError.rawValue
+    }
+
+    /**
+    - returns: the RLMError value, which can be used to derive the error's code.
+    */
+    internal var rlmError: RLMError {
+        switch self {
+        case .Fail:
+            return RLMError.Fail
+        case .FileAccessError:
+            return RLMError.FileAccessError
+        case .FilePermissionDenied:
+            return RLMError.FilePermissionDenied
+        case .FileExists:
+            return RLMError.FileExists
+        case .FileNotFound:
+            return RLMError.FileNotFound
+        case .IncompatibleLockFile:
+            return RLMError.IncompatibleLockFile
+        }
+    }
 
     /**
     Implementation of hidden requirement by `ErrorType`.
@@ -50,58 +72,38 @@ public struct Error : ErrorType {
     }
 
     /**
-    This initializer is private, because instances of this struct should be only for comparison,
-    when catching errors.
-    */
-    private init(code: RLMError) {
-        self._code = code.rawValue
-    }
-
-    /**
     - returns: error thrown by RLMRealm if no other specific error is returned when a realm is opened.
     */
-    public static func Fail() -> Error {
-        return Error(code: RLMError.Fail)
-    }
+    case Fail
 
     /**
     - returns: error thrown by RLMRealm for any I/O related exception scenarios when a realm is opened.
     */
-    public static func FileAccessError() -> Error {
-        return Error(code: RLMError.FileAccessError)
-    }
+    case FileAccessError
 
     /**
     - returns: error thrown by RLMRealm if the user does not have permission to open or create
                the specified file in the specified access mode when the realm is opened.
     */
-    public static func FilePermissionDenied() -> Error {
-        return Error(code: RLMError.FilePermissionDenied)
-    }
+    case FilePermissionDenied
 
     /**
     - returns: error thrown by RLMRealm if no_create was specified and the file did already exist
                when the realm is opened.
     */
-    public static func FileExists() -> Error {
-        return Error(code: RLMError.FileExists)
-    }
+    case FileExists
 
     /**
     - returns: error thrown by RLMRealm if no_create was specified and the file was not found
                when the realm is opened.
     */
-    public static func FileNotFound() -> Error {
-        return Error(code: RLMError.FileNotFound)
-    }
+    case FileNotFound
 
     /**
     - returns: error thrown by RLMRealm if the database file is currently open in another process which
                cannot share with the current process due to an architecture mismatch.
     */
-    public static func IncompatibleLockFile() -> Error {
-        return Error(code: RLMError.IncompatibleLockFile)
-    }
+    case IncompatibleLockFile
 }
 
 /**
