@@ -16,12 +16,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#import "RLMProperty_Private.h"
-
 #import "RLMArray.h"
+#import "RLMListBase.h"
 #import "RLMObject.h"
-#import "RLMSchema_Private.h"
 #import "RLMObject_Private.h"
+#import "RLMProperty_Private.h"
+#import "RLMSchema_Private.h"
 #import "RLMSwiftSupport.h"
 #import "RLMUtil.hpp"
 
@@ -244,16 +244,22 @@ BOOL RLMPropertyTypeIsNullable(RLMPropertyType propertyType) {
         _objcRawType = [NSString stringWithFormat:@"@\"RLMArray<%@>\"", [[obj valueForKey:_name] objectClassName]];
     }
 
-    if (![self setTypeFromRawType]) {
+    void (^throwForPropertyName)(NSString *) = ^(NSString *propertyName){
         NSString *reason = [NSString stringWithFormat:@"Can't persist property '%@' with incompatible type. "
-                            "Add to ignoredPropertyNames: method to ignore.", self.name];
+                            "Add to Object.ignoredProperties() class method to ignore.", propertyName];
         @throw RLMException(reason);
+    };
+
+    if (![self setTypeFromRawType]) {
+        throwForPropertyName(self.name);
     }
 
     // convert type for any swift property types (which are parsed as Any)
     if (_type == RLMPropertyTypeAny) {
         if ([[obj valueForKey:_name] isKindOfClass:[NSString class]]) {
             _type = RLMPropertyTypeString;
+        } else if (![[obj valueForKey:_name] isKindOfClass:[RLMListBase class]]) {
+            throwForPropertyName(self.name);
         }
     }
     if (_objcType == 'c') {
@@ -288,7 +294,7 @@ BOOL RLMPropertyTypeIsNullable(RLMPropertyType propertyType) {
 
     if (![self setTypeFromRawType]) {
         NSString *reason = [NSString stringWithFormat:@"Can't persist property '%@' with incompatible type. "
-                             "Add to ignoredPropertyNames: method to ignore.", self.name];
+                             "Add to +[RLMObject ignoredProperties] class method to ignore.", self.name];
         @throw RLMException(reason);
     }
 
