@@ -190,3 +190,54 @@ class SwiftIndexedPropertiesObject: Object {
         return ["stringCol"] // Add "intCol" when integer indexing is supported
     }
 }
+
+class BookingCategory: Object {}
+
+class Booking: Object {
+
+    enum BookingState: Int {
+        case Active = 0
+    }
+
+    dynamic var attendeesLimit: Int = 0
+    dynamic var date: NSDate = NSDate()
+    dynamic var duration: Int = 0
+    dynamic var bookingId: String = ""
+    dynamic var calendarId: String = ""
+
+    let customers = List<Customer>()
+    dynamic var profileId: String = ""
+    dynamic var serviceId: String = ""
+    dynamic var notes: String = ""
+    dynamic var notifiedCustomer: Bool = false
+    dynamic var notifiedEmployee: Bool = false
+    var state: BookingState = .Active
+    dynamic var title: String = ""
+    dynamic var category: BookingCategory?
+
+    override static func primaryKey() -> String? {
+        return "bookingId"
+    }
+}
+
+// Customers
+class Customer: Object {
+    dynamic var customerId: String = ""
+    dynamic var birthday: String = ""
+    dynamic var city: String = ""
+    dynamic var email: String = ""
+    dynamic var firstName: String = ""
+    dynamic var gender: String = ""
+    dynamic var lastName: String = ""
+    dynamic var notes: String = ""
+    dynamic var phoneCountry: String = ""
+    dynamic var phoneNumber: String = ""
+    dynamic var street: String = ""
+    dynamic var streetNumber: String = ""
+    dynamic var type: String = ""
+    dynamic var zipCode: String = ""
+
+    override static func primaryKey() -> String? {
+        return "customerId"
+    }
+}
