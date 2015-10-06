@@ -33,11 +33,7 @@ happening when initializing a Realm instance.
 
 */
 public enum Error: ErrorType {
-    /**
-    Implementation of hidden requirement by `ErrorType`.
-
-    - returns: the rawValue of the underlying `rlmError`.
-    */
+    /// :nodoc:
     public var _code: Int {
         return rlmError.rawValue
     }
@@ -62,11 +58,7 @@ public enum Error: ErrorType {
         }
     }
 
-    /**
-    Implementation of hidden requirement by `ErrorType`.
-
-    - returns: `RLMErrorDomain`.
-    */
+    /// :nodoc:
     public var _domain: String {
         return RLMErrorDomain
     }
