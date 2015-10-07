@@ -20,6 +20,7 @@ x.x.x Release notes (yyyy-MM-dd)
   the disk is out of space.
 * Added `isEmpty` property on `RLMRealm`/`Realm` to indicate if it contains any
   objects.
+* Support assigning `Results` to `List` properties via KVC.
 
 ### Bugfixes
 
