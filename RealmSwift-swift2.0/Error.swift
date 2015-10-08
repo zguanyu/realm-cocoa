@@ -71,7 +71,7 @@ public enum Error: ErrorType {
     /**
     - returns: error thrown by RLMRealm for any I/O related exception scenarios when a realm is opened.
     */
-    case FileAccessError
+    case FileAccess
 
     /**
     - returns: error thrown by RLMRealm if the user does not have permission to open or create

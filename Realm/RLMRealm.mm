@@ -252,7 +252,7 @@ void RLMRealmAddPathSettingsToConfiguration(RLMRealmConfiguration *configuration
             error = RLMMakeError(RLMErrorFileExists, ex);
         }
         catch (File::AccessError const& ex) {
-            error = RLMMakeError(RLMErrorFileAccessError, ex);
+            error = RLMMakeError(RLMErrorFileAccess, ex);
         }
         catch (IncompatibleLockFile const&) {
             NSString *err = @"Realm file is currently open in another process "
@@ -983,7 +983,7 @@ void RLMRealmSetSchemaVersionForPath(uint64_t version, NSString *path, RLMMigrat
     }
     catch (File::AccessError &ex) {
         if (error) {
-            *error = RLMMakeError(RLMErrorFileAccessError, ex);
+            *error = RLMMakeError(RLMErrorFileAccess, ex);
         }
     }
     catch (exception &ex) {
