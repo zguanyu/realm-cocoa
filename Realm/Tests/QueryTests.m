@@ -1074,6 +1074,15 @@
     [realm commitWriteTransaction];
 }
 
+- (void)testLinkQueryNewObject
+{
+    RLMRealm *realm = [self realmWithTestPath];
+
+    [self makeDogWithName:@"Harvie" owner:@"Tim"];
+    DogObject *newDogObject = [[DogObject alloc] init];
+    RLMAssertThrowsWithReasonMatching(([OwnerObject objectsInRealm:realm where:@"dog = %@", newDogObject].count), @"Object must be part of the Realm");
+}
+
 - (void)testLinkQueryString
 {
     RLMRealm *realm = [self realmWithTestPath];

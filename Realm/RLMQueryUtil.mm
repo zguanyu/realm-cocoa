@@ -352,6 +352,10 @@ void add_link_constraint_to_query(realm::Query & query,
     }
 
     if (obj) {
+        if (!obj->_row.is_attached()) {
+            @throw RLMPredicateException(@"Invalid link predicate",
+                                         @"Object must be part of the Realm");
+        }
         query.links_to(column, obj->_row.get_index());
     }
     else {
