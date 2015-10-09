@@ -156,15 +156,21 @@ static NSString * const c_defaultRealmFileName = @"default.realm";
 }
 
 - (void)setInMemoryIdentifier:(NSString *)inMemoryIdentifier {
-    if ((_inMemoryIdentifier = inMemoryIdentifier)) {
-        _path = nil;
+    if (inMemoryIdentifier.length == 0) {
+        @throw RLMException(@"In-memory identifier must not be empty");
     }
+
+    _inMemoryIdentifier = inMemoryIdentifier;
+    _path = nil;
 }
 
 - (void)setPath:(NSString *)path {
-    if ((_path = path)) {
-        _inMemoryIdentifier = nil;
+    if (path.length == 0) {
+        @throw RLMException(@"Realm path must not be empty");
     }
+
+    _path = path;
+    _inMemoryIdentifier = nil;
 }
 
 - (void)setEncryptionKey:(NSData * __nullable)encryptionKey {
