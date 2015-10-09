@@ -7,7 +7,7 @@ require 'xcodeproj'
 
 # Configuration
 compatibility_name = 'Carthage'
-schemes_to_build = ['iOS Dynamic', 'OSX', 'RealmSwift']
+schemes_to_build = ['iOS Dynamic', 'OSX', 'watchOS', 'RealmSwift']
 projects_to_build = ['Realm.xcodeproj', 'RealmSwift.xcodeproj']
 
 
@@ -16,12 +16,12 @@ project = Xcodeproj::Project.new("#{compatibility_name}.xcodeproj")
 project.save
 
 schemes_to_build.each do |scheme_name|
-	scheme = Xcodeproj::XCScheme.new
-	scheme.save_as(project.path, scheme_name)
+  scheme = Xcodeproj::XCScheme.new
+  scheme.save_as(project.path, scheme_name)
 end
 
 file_refs = projects_to_build.map do |project|
-	Xcodeproj::Workspace::FileReference.new(project, 'group')
+  Xcodeproj::Workspace::FileReference.new(project, 'group')
 end
 
 workspace = Xcodeproj::Workspace.new(*file_refs)

@@ -7,46 +7,46 @@
 	objects = {
 
 /* Begin PBXGroup section */
-		89A590E9670ECCF0B38FEE6C = {
-			isa = PBXGroup;
-			children = (
-				A115DC5D4C5DFE6380AD1D99 /* Products */,
-				91CD0E2545749073975A9FC9 /* Frameworks */,
-			);
-			sourceTree = "<group>";
-		};
-		91CD0E2545749073975A9FC9 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A115DC5D4C5DFE6380AD1D99 /* Products */ = {
+		735D1F4DB07CECEE4B53757A /* Products */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8A20FA8E63862120CD7E916B = {
+			isa = PBXGroup;
+			children = (
+				735D1F4DB07CECEE4B53757A /* Products */,
+				8A2293CE037C926E106CE573 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		8A2293CE037C926E106CE573 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXProject section */
-		5D7587ABD02AE382A2814BF0 /* Project object */ = {
+		A24175A919F767D382D28D0E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 			};
-			buildConfigurationList = 790CD038C5302E69CF69F185 /* Build configuration list for PBXProject "Carthage" */;
+			buildConfigurationList = 11615535332AB4E8DA904D59 /* Build configuration list for PBXProject "Carthage" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 89A590E9670ECCF0B38FEE6C;
-			productRefGroup = A115DC5D4C5DFE6380AD1D99 /* Products */;
+			mainGroup = 8A20FA8E63862120CD7E916B;
+			productRefGroup = 735D1F4DB07CECEE4B53757A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -55,7 +55,7 @@
 /* End PBXProject section */
 
 /* Begin XCBuildConfiguration section */
-		088F7E84ED9AB7D11C0ECE51 /* Release */ = {
+		A22442A4E30C30C39A394317 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -85,7 +85,7 @@
 			};
 			name = Release;
 		};
-		14E2A213F5C7B7C9F1AB5AAF /* Debug */ = {
+		FBA6DB068C38A5E993274FF0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -124,16 +124,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		790CD038C5302E69CF69F185 /* Build configuration list for PBXProject "Carthage" */ = {
+		11615535332AB4E8DA904D59 /* Build configuration list for PBXProject "Carthage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				14E2A213F5C7B7C9F1AB5AAF /* Debug */,
-				088F7E84ED9AB7D11C0ECE51 /* Release */,
+				FBA6DB068C38A5E993274FF0 /* Debug */,
+				A22442A4E30C30C39A394317 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 5D7587ABD02AE382A2814BF0 /* Project object */;
+	rootObject = A24175A919F767D382D28D0E /* Project object */;
 }
