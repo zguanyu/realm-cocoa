@@ -43,23 +43,10 @@ typedef NS_ENUM(NSUInteger, RLMRealmConfigurationUsage) {
 
 static std::atomic<RLMRealmConfigurationUsage> s_configurationUsage;
 
-@implementation RLMRealmConfiguration
-
+static NSString *const c_defaultRealmFileName = @"default.realm";
 RLMRealmConfiguration *s_defaultConfiguration;
-static NSString * const c_defaultRealmFileName = @"default.realm";
 
-+ (NSString *)defaultRealmPath
-{
-    static NSString *defaultRealmPath;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        defaultRealmPath = [[self class] writeablePathForFile:c_defaultRealmFileName];
-    });
-    return defaultRealmPath;
-}
-
-+ (NSString *)writeablePathForFile:(NSString*)fileName
-{
+NSString *RLMRealmPathForFile(NSString *fileName) {
 #if TARGET_OS_IPHONE
     // On iOS the Documents directory isn't user-visible, so put files there
     NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
@@ -83,6 +70,18 @@ static NSString * const c_defaultRealmFileName = @"default.realm";
     }
 #endif
     return [path stringByAppendingPathComponent:fileName];
+}
+
+@implementation RLMRealmConfiguration
+
++ (NSString *)defaultRealmPath
+{
+    static NSString *defaultRealmPath;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        defaultRealmPath = RLMRealmPathForFile(c_defaultRealmFileName);
+    });
+    return defaultRealmPath;
 }
 
 + (instancetype)defaultConfiguration {
