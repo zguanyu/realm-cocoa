@@ -39,7 +39,7 @@ public enum Error: ErrorType {
     }
 
     /// The RLMError value, which can be used to derive the error's code.
-    internal var rlmError: RLMError {
+    private var rlmError: RLMError {
         switch self {
         case .Fail:
             return RLMError.Fail
