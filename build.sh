@@ -192,6 +192,8 @@ shutdown_simulators() {
     done
 }
 
+source "$(dirname "$0")/scripts/swift-version.sh"
+
 ######################################
 # Device Test Helper
 ######################################
@@ -218,6 +220,16 @@ test_ios_devices() {
     configuration="$3"
     failed=0
     for device in "${serial_numbers[@]}"; do
+        if [[ "$device" = "07510d12c09c53e44b3682dd0367934f82cfab9c" ]]; then
+            if [[ "$cmd" = "xcrealmswift" ]]; then
+                echo "Swift tests can't be run on an iOS 7 device, skipping."
+                continue
+            else
+                # Only run iOS 7 device tests with Xcode 6
+                REALM_SWIFT_VERSION=1.2
+                find_xcode_for_swift $REALM_SWIFT_VERSION
+            fi
+        fi
         $cmd "-scheme '$2' -configuration $configuration -destination 'id=$device' test" || failed=1
     done
     return $failed
@@ -271,8 +283,6 @@ case "$COMMAND" in
     *) CONFIGURATION=${CONFIGURATION:-Release}
 esac
 export CONFIGURATION
-
-source "$(dirname "$0")/scripts/swift-version.sh"
 
 case "$COMMAND" in
 
@@ -467,9 +477,7 @@ case "$COMMAND" in
     "test-ios-devices")
         failed=0
         test_ios_devices xcrealm "iOS Device Tests" "$CONFIGURATION" || failed=1
-        if [ $REALM_SWIFT_VERSION != '1.2' ]; then
-            test_ios_devices xcrealmswift "RealmSwift" "$CONFIGURATION" || failed=1
-        fi
+        test_ios_devices xcrealmswift "RealmSwift" "$CONFIGURATION" || failed=1
         exit $failed
         ;;
 
