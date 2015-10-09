@@ -132,10 +132,14 @@ static NSString * const c_defaultRealmFileName = @"default.realm";
 
 - (instancetype)copyWithZone:(NSZone *)zone {
     RLMRealmConfiguration *configuration = [[[self class] allocWithZone:zone] init];
-    for (NSUInteger i = 0; i < c_RLMRealmConfigurationPropertiesCount; i++) {
-        NSString *key = c_RLMRealmConfigurationProperties[i];
-        [configuration setValue:[self valueForKey:key] forKey:key];
-    }
+    configuration->_path = _path;
+    configuration->_inMemoryIdentifier = _inMemoryIdentifier;
+    configuration->_encryptionKey = _encryptionKey;
+    configuration->_readOnly = _readOnly;
+    configuration->_schemaVersion = _schemaVersion;
+    configuration->_migrationBlock = _migrationBlock;
+    configuration->_dynamic = _dynamic;
+    configuration->_customSchema = _customSchema;
     return configuration;
 }
 
