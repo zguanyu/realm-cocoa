@@ -38,9 +38,7 @@ public enum Error: ErrorType {
         return rlmError.rawValue
     }
 
-    /**
-    - returns: the RLMError value, which can be used to derive the error's code.
-    */
+    /// The RLMError value, which can be used to derive the error's code.
     internal var rlmError: RLMError {
         switch self {
         case .Fail:
@@ -63,38 +61,26 @@ public enum Error: ErrorType {
         return RLMErrorDomain
     }
 
-    /**
-    - returns: error thrown by Realm if no other specific error is returned when a realm is opened.
-    */
+    /// Error thrown by Realm if no other specific error is returned when a realm is opened.
     case Fail
 
-    /**
-    - returns: error thrown by Realm for any I/O related exception scenarios when a realm is opened.
-    */
+    /// Error thrown by Realm for any I/O related exception scenarios when a realm is opened.
     case FileAccess
 
-    /**
-    - returns: error thrown by Realm if the user does not have permission to open or create
-               the specified file in the specified access mode when the realm is opened.
-    */
+    /// Error thrown by Realm if the user does not have permission to open or create
+    /// the specified file in the specified access mode when the realm is opened.
     case FilePermissionDenied
 
-    /**
-    - returns: error thrown by Realm if no_create was specified and the file did already exist
-               when the realm is opened.
-    */
+    /// Error thrown by Realm if no_create was specified and the file did already exist
+    /// when the realm is opened.
     case FileExists
 
-    /**
-    - returns: error thrown by Realm if no_create was specified and the file was not found
-               when the realm is opened.
-    */
+    /// Error thrown by Realm if no_create was specified and the file was not found
+    /// when the realm is opened.
     case FileNotFound
 
-    /**
-    - returns: error thrown by Realm if the database file is currently open in another process which
-               cannot share with the current process due to an architecture mismatch.
-    */
+    /// Error thrown by Realm if the database file is currently open in another process which
+    /// cannot share with the current process due to an architecture mismatch.
     case IncompatibleLockFile
 }
 
