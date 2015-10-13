@@ -108,10 +108,32 @@ static id RLMValidatedObjectForProperty(id obj, RLMProperty *prop, RLMSchema *sc
                     defaultValues = RLMDefaultValuesForObjectSchema(_objectSchema);
                 }
                 obj = defaultValues[prop.name];
+                if (!obj) {
+                    if (prop.type == RLMPropertyTypeInt) {
+                        obj = [NSNumber numberWithInt:0];
+                    }else if (prop.type == RLMPropertyTypeDouble){
+                        obj = [NSNumber numberWithDouble:0];
+                    }else if (prop.type == RLMPropertyTypeBool){
+                        obj = [NSNumber numberWithBool:0];
+                    }else if (prop.type == RLMPropertyTypeFloat){
+                        obj = [NSNumber numberWithFloat:0];
+                    }else if(prop.type == RLMPropertyTypeString){
+                        obj = [NSString string];
+                    }else if (prop.type == RLMPropertyTypeObject){
+                        Class someClass = NSClassFromString(prop.objectClassName);
+                        obj = [[someClass alloc] initWithValue:nil];
+                    }else if (prop.type == RLMPropertyTypeArray){
+                        obj = [NSArray array];
+                        
+                        
+                    }
+                }
+                
             }
-
-            obj = RLMValidatedObjectForProperty(obj, prop, schema);
-            [self setValue:RLMNSNullToNil(obj) forKeyPath:prop.name];
+            if (obj) {
+                obj = RLMValidatedObjectForProperty(obj, prop, schema);
+                [self setValue:RLMNSNullToNil(obj) forKeyPath:prop.name];
+            }
         }
     }
 
